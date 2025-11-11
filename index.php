@@ -5,7 +5,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     login($_POST);
 }
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="id">
 
 <head>
