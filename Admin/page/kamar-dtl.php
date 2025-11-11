@@ -1,13 +1,12 @@
 <?php
-$siswa = getSiswaJurusan();
-$jurusan = getJurusanName();
+$siswa = getSiswaKamar();
 ?>
 
-<div class="page"><a href="">Admin</a> / <a href="index.php?page=jurusan">Jurusan </a>/ Siswa</div>
+<div class="page"><a href="">Admin</a> / <a href="">Jurusan </a>/ <a href="">Siswa</a></div>
 <?php if(!$siswa):?>
     <h1>Tidak Ada Siswa Pada Jurusan Ini</h1>
     <?php else:?>
-        <h1>Daftar Siswa | <?= $jurusan['NAMA_JURUSAN']?> - <?= $jurusan['DETAIL_JURUSAN']?></h1>
+        <h1>Daftar Siswa Jurusan </h1>
     <table>
         <thead>
             <tr>

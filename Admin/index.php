@@ -16,11 +16,23 @@ if(isset($_GET['page'])){
     }else if($page == 'detail'){
         require_once 'page/detail_user.php';
     }else if($page == 'kamar'){
-        require_once 'page/kamar.php';
+        if(isset($_GET['id'])){
+            require_once 'page/kamar-dtl.php';
+        }else{
+            require_once 'page/kamar.php';
+        }
     }else if($page == 'jurusan'){
         require_once 'page/jurusan.php';
     }else if($page == 'siswa_jurusan'){
         require_once 'page/siswa_jurusan.php';
+    }else if($page == 'profil'){
+        require_once 'page/profile.php';
+    }
+    
+    
+    
+    else{
+        require_once 'page/not-found.php';
     }
 }
 ?>

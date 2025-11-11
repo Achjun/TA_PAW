@@ -24,6 +24,7 @@ function login()
         $_SESSION['username'] = $data['USERNAME'];
         $_SESSION['nama']     = $data['NAMA'];
         $_SESSION['role']     = $data['ROLE'];
+        $_SESSION['role']     = $data['ROLE'];
 
         if ($data['ROLE'] == '1') {
             header("Location: Admin/index.php");

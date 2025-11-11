@@ -9,7 +9,7 @@ if(isset($_GET['hapus'])){
 ?>
 <div class="top">
     <div class="kiri">
-        <div class="page"><a href="">Admin</a> / <a href="">Jurusan </a></div>
+        <div class="page"><a href="index.php">Admin</a> / Jurusan</div>
         <h1>Daftar Jurusan</h1><br>
     </div>
     <?php if(isset($_SESSION['msg'])):?>
@@ -51,7 +51,9 @@ if(isset($_GET['hapus'])){
             <td><?= $km['DETAIL_JURUSAN'] ?></td>
             <td><?= $km['jumlah'] ?></td>
             <td>
+                <?php if($km['jumlah']>0):?>
                 <a href="index.php?page=siswa_jurusan&id=<?= $km['ID_JURUSAN'] ?>" class="lihat">Lihat</a>
+                <?php endif?>
                 <a href="index.php?page=jurusan&id=<?= $km['ID_JURUSAN'] ?>&hapus" class="hps">Hapus</a>
             </td>
         </tr>

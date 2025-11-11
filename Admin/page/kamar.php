@@ -35,10 +35,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             <td><?= $km['jumlah'] ?></td>
             <td><?= $km['KAPASITAS'] ?></td>
             <td>
-                <a href="index.php?page=detail&user=" class="acc">Lihat</a>
+                <a href="index.php?page=kamar&id=<?= $km['ID_KAMAR'] ?>" class="acc">Lihat</a>
             </td>
         </tr>
         <?php endforeach?>
-        
     </tbody>
 </table>
