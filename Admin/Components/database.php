@@ -85,7 +85,40 @@ function tambahKamar(){
 
 // Daftar Jurusan
 function getAllJurusan(){
-    $jurusan = DBC->prepare("SELECT jurusan.*, COUNT(pendaftaran.ID_JURUSAN) AS jumlah FROM jurusan LEFT JOIN pendaftaran ON jurusan.ID_JURUSAN = pendaftaran.ID_JURUSAN GROUP BY jurusan.ID_JURUSAN ");
+    $jurusan = DBC->prepare("SELECT jurusan.*, COUNT(pendaftaran.ID_JURUSAN) AS jumlah FROM jurusan LEFT JOIN pendaftaran ON jurusan.ID_JURUSAN = pendaftaran.ID_JURUSAN AND pendaftaran.STATUS_DAFTAR = 1 GROUP BY jurusan.ID_JURUSAN ");
     $jurusan->execute();
     return $jurusan->fetchAll();
+}
+
+// Tambah Jurusan
+function tambahJurusan($array){
+    $jurusan = DBC->prepare("INSERT INTO jurusan VALUES (NULL, :nama, :detail)");
+    $jurusan->execute([':nama' => $array['jurusan'],':detail'=>$array['dtl']]);
+    if($jurusan->rowCount()>0){
+        $_SESSION['msg'] = 'Jurusan Berhasil Ditambah!';
+        header("Location:index.php?page=jurusan");
+        exit;        
+    }
+}
+
+// Hapus Jurusan
+function hapusJurusan(){
+    $hapus = DBC->prepare("DELETE FROM jurusan WHERE ID_JURUSAN = :id");
+    $hapus->execute([':id' => $_GET['id']]);
+    if($hapus->rowCount()>0){
+        $_SESSION['msg'] = 'Jurusan Berhasil Dihapus!';
+        header("Location:index.php?page=jurusan");
+        exit;
+    }
+}
+
+// Menampilkan Siswa Berdasarkan Jurusan
+function getSiswaJurusan(){
+    $siswa = DBC->prepare("SELECT pendaftaran.*, users.NAMA FROM pendaftaran JOIN users ON pendaftaran.USERNAME = users.USERNAME WHERE pendaftaran.ID_JURUSAN = :id AND pendaftaran.STATUS_DAFTAR = 1");
+    $siswa->execute([':id' => $_GET['id']]);
+    if($siswa->rowCount()>0){
+        return $siswa->fetchAll();
+    }else{
+        return false;
+    }
 }

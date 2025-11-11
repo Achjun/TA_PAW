@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once 'Components/database.php';
 require_once 'Components/header.php';
 ?>
@@ -18,6 +19,8 @@ if(isset($_GET['page'])){
         require_once 'page/kamar.php';
     }else if($page == 'jurusan'){
         require_once 'page/jurusan.php';
+    }else if($page == 'siswa_jurusan'){
+        require_once 'page/siswa_jurusan.php';
     }
 }
 ?>

@@ -24,6 +24,5 @@ $pendaftar = getAllPendaftar();
             </td>
         </tr>
         <?php endforeach?>
-        
     </tbody>
 </table>

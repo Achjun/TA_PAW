@@ -46,7 +46,7 @@ header .menu a:hover {
 /* Content */
 .content {
     /* margin-left: 250px; Ruang untuk sidebar */
-    margin-top: 60px; /* Ruang untuk header */
+    margin-top: 50px; /* Ruang untuk header */
     padding: 2rem;
     flex: 1;
     background-color: rgb(248, 250, 252); /* Background */
@@ -167,6 +167,23 @@ a.acc, a.dec, a.show{
     outline: none;
     border-radius: 5px;
 }
+a.hps, a.lihat{
+    text-decoration: none;
+    width: 30px;
+    padding: 5px;
+    outline: none;
+    font-size: small;
+    border-radius: 5px;
+    
+}
+.hps{
+    background-color: #FB4141;
+    color: white;
+}
+.lihat{
+    background-color: #41A67E;
+    color:#DDF4E7;
+}
 .acc{
     margin-left: 15px;
     background-color: #41A67E;
@@ -220,4 +237,23 @@ input:focus {
 .logout{
     font-weight: bold;
     color: #FB4141 !important;
+}
+.page{
+    color: #41A67E;
+}
+.page > a{
+    color: #004d40;
+    text-decoration: none;
+}
+.top{
+    display: flex;
+    justify-content: space-between;
+}
+.success-alert{
+     background-color: #DFF0D8; /* hijau muda */
+  color: #1B5E20; /* teks hijau tua */
+  border-left: 4px solid #28a745;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-weight: 500;
 }
