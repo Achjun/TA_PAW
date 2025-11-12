@@ -7,7 +7,7 @@ function login()
     session_start();
 
     $username = $_POST['username'];
-    $passwd   = $_POST['password'];
+    $passwd   = md5($_POST['password']);
 
     $user = DBC->prepare("SELECT * FROM USERS WHERE USERNAME = :username AND PASSWORD = :pass");
     $user->execute([
@@ -21,9 +21,6 @@ function login()
         $_SESSION['username'] = $data['USERNAME'];
         $_SESSION['nama']     = $data['NAMA'];
         $_SESSION['role']     = $data['ROLE'];
-        $_SESSION['role']     = $data['ROLE'];
-
-
 
         $_SESSION['pesan'] = [
             'tipe' => 'sukses',
@@ -57,7 +54,7 @@ function register($array)
     if ($cek == 0) {
         $register = DBC->prepare("
             INSERT INTO USERS (USERNAME, PASSWORD, NAMA, FOTO_SISWA, ROLE)
-            VALUES (:username, :pass, :nama, NULL, '0')
+            VALUES (:username, md5(:pass), :nama, NULL, '0')
         ");
         $register->execute([
             ':username' => $array['username'],

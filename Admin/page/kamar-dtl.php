@@ -3,6 +3,8 @@ if(!defined('APP_SECURE')){
     require_once 'error.php';
     die();
 }
+$dtl_kamar = getKamarName($_GET['id']);
+
 $siswa = getSiswaKamar();
 ?>
 
@@ -10,7 +12,7 @@ $siswa = getSiswaKamar();
 <?php if(!$siswa):?>
     <h1>Tidak Ada Siswa Pada Kamar Ini</h1>
     <?php else:?>
-        <h1>Daftar Siswa Jurusan </h1>
+        <h1>Daftar Siswa Kamar | <?= $dtl_kamar['KAMAR']?></h1>
     <table>
         <thead>
             <tr>

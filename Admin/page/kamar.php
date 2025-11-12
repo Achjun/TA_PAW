@@ -8,11 +8,17 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
     tambahKamar();
     header("Location:index.php?page=kamar");
 }
+if(isset($_POST['edit'])){
+    editKamar($_POST);
+}
+if(isset($_GET['hapus'])){
+    hapusKamar();
+}
 ?>
 <div class="top">
     <div class="kiri">
         <div class="page"><a href="index.php">Dashboard</a> / Kamar</div>
-        <h1>Daftar Jurusan</h1><br>
+        <h1>Daftar Kamar</h1><br>
     </div>
     <?php if(isset($_SESSION['msg'])):?>
         <div class="kanan">
@@ -22,6 +28,21 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
         unset($_SESSION['msg']);
         ?>
     <?php endif?>
+       <?php if(isset($_GET['edit'])):?>
+            <?php
+            $dtl_kamar = getKamarName($_GET['id_km']);
+            ?>
+        <form action="" method="POST" class="frkamar editjurusan">
+            <label for="nama">Nama Kamar</label>
+            <input type="hidden" name="id" value="<?= $dtl_kamar['ID_KAMAR'] ?>">
+            <input type="text" id="nama" value="<?= $dtl_kamar['KAMAR'] ?>" name="jurusan"><br>
+            <label for="kapasitas">Kapasitas</label>
+            <input type="text" id="kapasitas" name="dtl" value="<?= $dtl_kamar['KAPASITAS'] ?>"><br>
+            <div class="btn">
+                <button type="submit" class="btn-tambah" name="edit">Edit</button>
+            </div>
+        </form>
+        <?php endif?>
 </div>
 <a href="index.php?page=kamar&add" class="show">Tambah Kamar Baru</a>
 <?php if(isset($_GET['add'])):?>
@@ -40,7 +61,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             <th>Kamar</th>
             <th>Jumlah</th>
             <th>Kapasitas</th>
-            <th>Detail</th>
+            <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
@@ -53,7 +74,9 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
             <td><?= $km['jumlah'] ?></td>
             <td><?= $km['KAPASITAS'] ?></td>
             <td>
-                <a href="index.php?page=kamar&id=<?= $km['ID_KAMAR'] ?>" class="acc">Lihat</a>
+                <a href="index.php?page=kamar&id=<?= $km['ID_KAMAR'] ?>" class="lihat">Lihat</a>
+                <a href="index.php?page=kamar&id_km=<?= $km['ID_KAMAR'] ?>&edit" class="show-edit">Edit</a>
+                <a href="index.php?page=kamar&id_km=<?= $km['ID_KAMAR'] ?>&hapus" class="hps">Hapus</a>
             </td>
         </tr>
         <?php endforeach?>

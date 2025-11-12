@@ -127,6 +127,16 @@ function editJurusan($array){
     header("Location:index.php?page=jurusan");
     exit;
 }
+function editKamar($array){
+    $update = DBC->prepare("UPDATE kamar SET KAMAR = :nama, KAPASITAS = :kapas WHERE ID_KAMAR = :id");
+    $update->execute([
+        ':nama' => $array['kamar'],
+        ':detail'=>$array['kapasitas'],
+        ':id' => $array['id_km']
+    ]);
+    header("Location:index.php?page=kamar");
+    exit;
+}
 
 function getJurusanName(){
     $jurusan = DBC->prepare("SELECT * FROM jurusan WHERE ID_JURUSAN = :id");
@@ -134,6 +144,11 @@ function getJurusanName(){
     return $jurusan->fetch();
 }
 
+function getKamarName($id){
+    $kamar = DBC->prepare("SELECT * FROM KAMAR WHERE ID_KAMAR = :id");
+    $kamar->execute([':id' =>$id]);
+    return $kamar->fetch();
+}
 
 // Hapus Jurusan
 function hapusJurusan(){
@@ -142,6 +157,15 @@ function hapusJurusan(){
     if($hapus->rowCount()>0){
         $_SESSION['msg'] = 'Jurusan Berhasil Dihapus!';
         header("Location:index.php?page=jurusan");
+        exit;
+    }
+}
+function hapusKamar(){
+    $hapus = DBC->prepare("DELETE FROM KAMAR WHERE ID_KAMAR = :id");
+    $hapus->execute([':id' => $_GET['id_km']]);
+    if($hapus->rowCount()>0){
+        $_SESSION['msg'] = 'Kamar Berhasil Dihapus!';
+        header("Location:index.php?page=kamar");
         exit;
     }
 }
