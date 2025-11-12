@@ -35,6 +35,8 @@ $user = getUserByUsername($username);
             <span><strong>PPDB</strong> Online <strong>Pesantren</strong></span>
         </div>
         <nav class="menu">
+
+            <a href="index.php">Home</a>
             <a href="index.php" class="active">Home</a>
             <a href="riwayat.php">Riwayat Pendaftaran</a>
             <a href="pendaftaran.php">Pendaftaran</a>
