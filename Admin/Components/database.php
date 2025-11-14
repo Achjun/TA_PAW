@@ -269,7 +269,7 @@ function pendaftarTerima(){
     return $temp['jumlah'];
 }
 function pendaftarOnline(){
-    $online = DBC->prepare("SELECT COUNT(USERNAME) AS jumlah FROM pendaftaran WHERE STATUS_DAFTAR = 0");
+    $online = DBC->prepare("SELECT COUNT(USERNAME) AS jumlah FROM pendaftaran");
     $online->execute();
     $temp = $online->fetch();
     return $temp['jumlah'];
