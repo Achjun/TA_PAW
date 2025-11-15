@@ -20,6 +20,14 @@ if(isset($_GET['hapus'])){
         <h1>Daftar Jurusan</h1><br>
     </div>
     <div class="kanan">
+       <?php if(isset($_SESSION['msg_sc'])):?>
+        <div class="kanan">
+            <span class="success-alert"><?= $_SESSION['msg_sc']?> </span>
+        </div>
+        <?php
+        unset($_SESSION['msg_sc']);
+        ?>
+    <?php endif?> 
     <?php if(isset($_SESSION['msg_err'])):?>
         <div class="kanan">
         <?php

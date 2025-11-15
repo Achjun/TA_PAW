@@ -142,14 +142,25 @@ function tambahJurusan($array){
 
 // Edit jurusan
 function editJurusan($array){
-    $update = DBC->prepare("UPDATE jurusan SET NAMA_JURUSAN = :nama, DETAIL_JURUSAN = :detail WHERE ID_JURUSAN = :id");
-    $update->execute([
-        ':nama' => $array['jurusan'],
-        ':detail'=>$array['dtl'],
-        ':id' => $array['id']
-    ]);
-    header("Location:index.php?page=jurusan");
-    exit;
+    $reNama = "/^[a-zA-Z\s]+$/";
+    $errors = [];
+    validate($errors,$array,'jurusan',$reNama,"Nama Jurusan Hanya Mengandung Alfabet","Jurusan");
+    validate($errors,$array,'dtl',$reNama,"Detail Jurusan Hanya Mengandung Alfabet","Detail Jurusan");
+    if(!$errors){
+        $update = DBC->prepare("UPDATE jurusan SET NAMA_JURUSAN = :nama, DETAIL_JURUSAN = :detail WHERE ID_JURUSAN = :id");
+        $update->execute([
+            ':nama' => $array['jurusan'],
+            ':detail'=>$array['dtl'],
+            ':id' => $array['id']
+        ]);
+        $_SESSION['msg_sc'] = 'Jurusan Berhasil Diupdate';
+        header("Location:index.php?page=jurusan");
+        exit;
+    }else{
+        $_SESSION['msg_err'] = $errors;
+        header("Location:index.php?page=jurusan");
+        exit;
+    }
 }
 function editKamar($array){
     $reNama = "/^[a-zA-Z0-9\s]+$/";
