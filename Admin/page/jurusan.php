@@ -5,10 +5,12 @@ if(!defined('APP_SECURE')){
 }
 $jurusan = getAllJurusan();
 if(isset($_POST['tambah'])){
-    tambahJurusan($_POST);
+    $err = [];
+    $tambah = tambahJurusan($err,$_POST);
 }
 if(isset($_POST['edit'])){
-    editJurusan($_POST);
+    $err = [];
+    $edit=editJurusan($err,$_POST);
 }
 if(isset($_GET['hapus'])){
     hapusJurusan();
@@ -47,9 +49,11 @@ if(isset($_GET['hapus'])){
         <form action="" method="POST" class="frkamar editjurusan">
             <label for="nama">Nama Jurusan</label>
             <input type="hidden" name="id" value="<?= $dtl_jurusan['ID_JURUSAN'] ?>">
-            <input type="text" id="nama" value="<?= $dtl_jurusan['NAMA_JURUSAN'] ?>" name="jurusan"><br>
+            <input type="text" id="nama" value="<?=$_POST['jurusan']?? $dtl_jurusan['NAMA_JURUSAN'] ?>" name="jurusan"><br>
+            <span class="errspan knn"><?= $edit['jurusan'] ?? '' ?></span>
             <label for="kapasitas">Detail Jurusan</label>
-            <input type="text" id="kapasitas" name="dtl" value="<?= $dtl_jurusan['DETAIL_JURUSAN'] ?>"><br>
+            <input type="text" id="kapasitas" name="dtl" value="<?= $_POST['dtl']??$dtl_jurusan['DETAIL_JURUSAN'] ?>"><br>
+            <span class="errspan knn"><?= $edit['dtl'] ?? '' ?></span>
             <div class="btn">
                 <button type="submit" class="btn-tambah" name="edit">Edit</button>
             </div>
@@ -62,8 +66,10 @@ if(isset($_GET['hapus'])){
 <form action="" method="POST" class="frkamar">
     <label for="nama">Nama Jurusan</label>
     <input type="text" id="nama" name="jurusan"><br>
+    <span class="errspan"><?= $tambah['jurusan'] ?? '' ?></span>
     <label for="kapasitas">Detail Jurusan</label>
     <input type="text" id="kapasitas" name="dtl"><br>
+    <span class="errspan"><?= $tambah['dtl'] ?? '' ?></span>
     <button type="submit" class="btn-tambah" name="tambah">Tambah</button>
 </form>
 <?php endif?>

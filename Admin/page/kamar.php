@@ -5,10 +5,10 @@ if(!defined('APP_SECURE')){
 }
 $kamar = getAllKamar();
 if(isset($_POST['tambah'])){
-    tambahKamar($_POST);
+    $tambah=tambahKamar($_POST);
 }
 if(isset($_POST['edit'])){
-    editKamar($_POST);
+   $edit =  editKamar($_POST);
 }
 if(isset($_GET['hapus'])){
     hapusKamar();
@@ -46,9 +46,11 @@ if(isset($_GET['hapus'])){
         <form action="" method="POST" class="frkamar editjurusan">
             <label for="nama">Nama Kamar</label>
             <input type="hidden" name="id" value="<?= $dtl_kamar['ID_KAMAR'] ?>">
-            <input type="text" id="nama" value="<?= $dtl_kamar['KAMAR'] ?>" name="kamar"><br>
+            <input type="text" id="nama" value="<?= $_POST['kamar']?? $dtl_kamar['KAMAR'] ?>" name="kamar"><br>
+            <span class="errspan knn"><?= $edit['kamar'] ?? '' ?></span>
             <label for="kapasitas">Kapasitas</label>
-            <input type="text" id="kapasitas" name="kapasitas" value="<?= $dtl_kamar['KAPASITAS'] ?>"><br>
+            <input type="text" id="kapasitas" name="kapasitas" value="<?=$_POST['kapasitas']?? $dtl_kamar['KAPASITAS'] ?>"><br>
+            <span class="errspan knn"><?= $edit['kapasitas'] ?? '' ?></span>
             <div class="btn">
                 <button type="submit" class="btn-tambah" name="edit">Edit</button>
             </div>
@@ -59,9 +61,11 @@ if(isset($_GET['hapus'])){
 <?php if(isset($_GET['add'])):?>
 <form action="" method="POST" class="frkamar">
     <label for="nama">Nama Kamar</label>
-    <input type="text" id="nama" name="kamar"><br>
+    <input type="text" id="nama" value="<?=$_POST['kamar']??'' ?>" name="kamar"><br>
+    <span class="errspan"><?= $tambah['kamar'] ?? '' ?></span>
     <label for="kapasitas">Kapasitas</label>
-    <input type="text" id="kapasitas" name="kapasitas"><br>
+    <input type="text" id="kapasitas" value="<?=$_POST['kapasitas']??'' ?>" name="kapasitas"><br>
+    <span class="errspan"><?= $tambah['kapasitas'] ?? '' ?></span>
     <button type="submit" name="tambah" class="btn-tambah">Tambah</button>
 </form>
 <?php endif?>

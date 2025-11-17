@@ -4,23 +4,12 @@ if(!defined('APP_SECURE')){
     die();
 }
 if ($_SERVER['REQUEST_METHOD']=='POST') {
-    updateProfileAdmin($_POST);
+    $err = updateProfileAdmin($_POST);
 }
 ?>
 <div class="alert-msg-prof">
-    <?php if(isset($_SESSION['msg_sc'])):?>
-        <div class="success-alert"><?=$_SESSION['msg_sc']?></div>
-        <?php
-        unset($_SESSION['msg_sc'])
-        ?>
-    <?php endif?>
-    <?php if(isset($_SESSION['msg_err'])):?>
-        <?php foreach($_SESSION['msg_err'] as $err ):?>
-            <div class="danger-alert"><?=$err?></div>
-        <?php endforeach?>
-        <?php
-        unset($_SESSION['msg_err']);
-        ?>
+    <?php if(isset($err) && empty($err)):?>
+        <div class="success-alert">Profil Berhasil Diupdate!</div>
     <?php endif?>
 </div>
 <div class="profile-card">
@@ -33,15 +22,23 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
         <div class="profile-info">
             <div>
                 <strong>Username</strong>
-                <input type="text" name="username" disabled class="profile-form" value="<?= $_SESSION['username'] ?>">
+                <span>
+                    <input type="text" name="username" disabled class="profile-form" value="<?= $_SESSION['username'] ?>"><br>
+                </span>
             </div>
             <div>
                 <strong>Nama</strong>
-                <input type="text" name="nama" class="profile-form" value="<?= $_SESSION['nama'] ?>">
+                <span class="knn">
+                    <input type="text" name="nama" class="profile-form" value="<?= $_SESSION['nama'] ?>"><br>
+                    <span class="errspan"><?= $err['nama'] ?? "" ?></span>
+                </span>
             </div>
             <div>
                 <span><strong>Password Baru</strong><br>(Kosongkan jika tidak ingin diganti)</span>
-                <input type="password" name="pass" class="profile-form">
+                <span class="knn">
+                    <input type="password" name="pass" class="profile-form"><br>
+                    <span class="errspan"><?= $err['pass'] ?? "" ?></span>
+                </span>
             </div>
             <div>
                 <span></span>

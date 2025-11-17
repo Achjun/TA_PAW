@@ -426,6 +426,13 @@ p.ttl{
     border: 1px solid #b8daff;
 }
 
+.errspan {
+    color: red !important;
+    font-size: 14px;
+    margin-top: 5px;
+    display: block;
+}
+
 @keyframes fadeOut {
     0% {
         opacity: 1;
@@ -439,4 +446,8 @@ p.ttl{
         opacity: 0;
         display: none;
     }
+}
+
+.knn{
+    text-align: right;
 }

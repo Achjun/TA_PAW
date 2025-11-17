@@ -98,11 +98,10 @@ function tambahKamar($array){
         $_SESSION['msg_sc'] = 'Kamar Berhasil Ditambah';
         
         header("Location:index.php?page=kamar");
-    }else{
-        $_SESSION['msg_err'] = $errors;
-        header("Location:index.php?page=kamar&add");
+        die;
+
     }
-    die;
+    return $errors;
 }
 
 // Penghuni Kamar
@@ -120,30 +119,26 @@ function getAllJurusan(){
 }
 
 // Tambah Jurusan
-function tambahJurusan($array){
+function tambahJurusan(&$errors,$array){
     $reNama = "/^[a-zA-Z\s]+$/";
-    $errors = [];
+    //  = [];
     validate($errors,$array,'jurusan',$reNama,"Nama Jurusan Hanya Mengandung Alfabet","Jurusan");
     validate($errors,$array,'dtl',$reNama,"Detail Jurusan Hanya Mengandung Alfabet","Detail Jurusan");
     if(!$errors){
         $jurusan = DBC->prepare("INSERT INTO jurusan VALUES (NULL, :nama, :detail)");
         $jurusan->execute([':nama' => $array['jurusan'],':detail'=>$array['dtl']]);
         if($jurusan->rowCount()>0){
-            $_SESSION['msg_sc'] = 'Jurusan Berhasil Ditambah';
-            header("Location:index.php?page=jurusan");
-            exit;        
+            $_SESSION['msg_sc'] = 'Jurusan Berhasil Ditambah';    
+            header('Location:index.php?page=jurusan');
+            die;  
         }
-    }else{
-        $_SESSION['msg_err'] = $errors;
     }
-    header("Location:index.php?page=jurusan");
-    exit;
+    return $errors;
 }
 
 // Edit jurusan
-function editJurusan($array){
+function editJurusan(&$errors,$array){
     $reNama = "/^[a-zA-Z\s]+$/";
-    $errors = [];
     validate($errors,$array,'jurusan',$reNama,"Nama Jurusan Hanya Mengandung Alfabet","Jurusan");
     validate($errors,$array,'dtl',$reNama,"Detail Jurusan Hanya Mengandung Alfabet","Detail Jurusan");
     if(!$errors){
@@ -156,16 +151,13 @@ function editJurusan($array){
         $_SESSION['msg_sc'] = 'Jurusan Berhasil Diupdate';
         header("Location:index.php?page=jurusan");
         exit;
-    }else{
-        $_SESSION['msg_err'] = $errors;
-        header("Location:index.php?page=jurusan");
-        exit;
     }
+    return $errors;
 }
 function editKamar($array){
+    $errors = [];
     $reNama = "/^[a-zA-Z0-9\s]+$/";
     $reAngka = "/^[0-9]*$/";
-    $errors = [];
     validate($errors,$array,'kamar',$reNama,"Nama Kamar Hanya Mengandung Alfabet","Kamar");
     validate($errors,$array,'kapasitas',$reAngka,"Kapasitas Merupakan Angka","Kapasitas");
     if(!$errors){
@@ -176,11 +168,11 @@ function editKamar($array){
             ':id' => $array['id']
         ]);
         $_SESSION['msg_sc'] = 'Kamar Berhasil Diupdate';
-    }else{
-        $_SESSION['msg_err'] = $errors;
+        header("Location:index.php?page=kamar");
+        exit;
     }
-    header("Location:index.php?page=kamar");
-    exit;
+    return $errors;
+    
 }
 
 function getJurusanName(){
@@ -246,12 +238,12 @@ function getSiswaJurusan(){
 function updateProfileAdmin($array){
     // Cek username
     $errors = [];
-    $rePass = "/^(?=.*[a-zA-Z])(?=.*\d)[A-Za-z\d]+$/";
+    $rePass = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z0-9])\S+$/";
     $reNama = "/^[a-zA-Z\s]+$/";
     validate($errors,$array,'nama',$reNama,"Nama Hanya Mengandung Alfabet","Nama");
     if(!empty($array['pass'])){
         validasi_jumlah($errors,$array,'pass',8,"Password minimal berjumlah 8 karakter");
-        validate($errors,$array,'pass',$rePass,"Password Kombinasi huruf dan angka","Password");
+        validate($errors,$array,'pass',$rePass,"Password Kombinasi huruf kecil,huruf besar, angka dan karakter khusus","Password");
         if(!$errors){
             $update = DBC->prepare("UPDATE users SET NAMA = :nama, PASSWORD = :pass WHERE username = :username");
             $update->execute([
@@ -261,15 +253,8 @@ function updateProfileAdmin($array){
             ]);
             if($update->rowCount()>0){
                 $_SESSION['nama']     = $array['nama'];
-                $_SESSION['msg_sc'] = 'Data Berhasil Diupdate!';
-            }else{
-                $_SESSION['msg_err'] = 'Data Gagal Diupdate!';
             }
-        }else{
-            $_SESSION['msg_err'] = $errors;
         }
-        header("Location:index.php?page=profil");
-        exit;
     }else{
         if(!$errors){
             $update = DBC->prepare("UPDATE users SET NAMA = :nama WHERE username = :username");
@@ -279,15 +264,14 @@ function updateProfileAdmin($array){
             ]);
             if($update->rowCount()>0){
                 $_SESSION['nama']     = $array['nama'];
-                $_SESSION['msg_sc'] = 'Data Berhasil Diupdate!';
-            }else{
-                $_SESSION['msg_err'] = 'Data Gagal Diupdate!';
             }
-        }else{
-            $_SESSION['msg_err'] = $errors;
         }
-        header("Location:index.php?page=profil");
-        exit;
+    }
+    return $errors;
+}
+function unsetErr(){
+    if (isset($_SESSION['msg_err'])){
+        unset($_SESSION['msg_err']);
     }
 }
 
